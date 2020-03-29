@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B0787EE2-13A1-4252-9B31-1D789A18D222}"
+	ProjectSection(SolutionItems) = preProject
+		nuget.config = nuget.config
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.Vfp", "EntityFrameworkCore.Vfp\EntityFrameworkCore.Vfp.csproj", "{BDD92FA9-802C-4CED-B3D7-72C17F789DCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore.Vfp.Tests", "EntityFrameworkCore.Vfp.Tests\EntityFrameworkCore.Vfp.Tests.csproj", "{FEC038A5-5580-42F9-A21E-55418D48C8C8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDD92FA9-802C-4CED-B3D7-72C17F789DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD92FA9-802C-4CED-B3D7-72C17F789DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD92FA9-802C-4CED-B3D7-72C17F789DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD92FA9-802C-4CED-B3D7-72C17F789DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC038A5-5580-42F9-A21E-55418D48C8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC038A5-5580-42F9-A21E-55418D48C8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC038A5-5580-42F9-A21E-55418D48C8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC038A5-5580-42F9-A21E-55418D48C8C8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F2AA4A69-5314-4D1D-94D4-53A877EC6E70}
+	EndGlobalSection
+EndGlobal
