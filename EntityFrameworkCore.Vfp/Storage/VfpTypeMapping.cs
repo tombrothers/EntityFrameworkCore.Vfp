@@ -1,21 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using System;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
+using VfpClient;
 
 namespace EntityFrameworkCore.Vfp.Storage {
     public class VfpTypeMapping : RelationalTypeMapping {
+        private readonly VfpType _vfpType;
+
         public VfpTypeMapping(
-            [NotNull] string storeType,
-            Type type,
-            DbType? dbType = null)
-            : base(storeType, type, dbType) {
+            VfpType vfpType,
+            Type type
+        ) : this(new RelationalTypeMappingParameters(
+                new CoreTypeMappingParameters(type),
+                vfpType.ToVfpTypeName(),
+                StoreTypePostfix.None,
+                vfpType.ToDbType()
+            ),
+            vfpType
+        ) {
         }
 
-        protected VfpTypeMapping(RelationalTypeMappingParameters parameters)
+        protected VfpTypeMapping(RelationalTypeMappingParameters parameters, VfpType vfpType)
             : base(parameters) {
+            _vfpType = vfpType;
         }
 
-        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters) => new VfpTypeMapping(parameters);
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters) => new VfpTypeMapping(parameters, _vfpType);
     }
 }

@@ -63,6 +63,16 @@ namespace EntityFrameworkCore.Vfp.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] AllTypesZip {
+            get {
+                object obj = ResourceManager.GetObject("AllTypesZip", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] NorthwindVfpZip {
             get {
                 object obj = ResourceManager.GetObject("NorthwindVfpZip", resourceCulture);

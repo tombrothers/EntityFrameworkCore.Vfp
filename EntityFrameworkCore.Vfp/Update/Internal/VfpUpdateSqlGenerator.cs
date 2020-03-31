@@ -1,19 +1,118 @@
-﻿using Microsoft.EntityFrameworkCore.Update;
+﻿using EntityFrameworkCore.Vfp.Update.Internal.Interfaces;
+using EntityFrameworkCore.Vfp.VfpOleDb;
+using Microsoft.EntityFrameworkCore.Update;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
-using EntityFrameworkCore.Vfp.Update.Internal.Interfaces;
 
 namespace EntityFrameworkCore.Vfp.Update.Internal {
     public class VfpUpdateSqlGenerator : UpdateSqlGenerator, IVfpUpdateSqlGenerator {
         public VfpUpdateSqlGenerator([NotNull] UpdateSqlGeneratorDependencies dependencies) : base(dependencies) {
         }
 
-        protected override void AppendIdentityWhereCondition([NotNull] StringBuilder commandStringBuilder, [NotNull] ColumnModification columnModification) {
-            throw new System.NotImplementedException();
+        public override ResultSetMapping AppendInsertOperation(
+            StringBuilder commandStringBuilder,
+            ModificationCommand command,
+            int commandPosition
+        ) {
+            commandStringBuilder.ThrowIfNull(nameof(commandStringBuilder));
+            command.ThrowIfNull(nameof(command));
+
+            var name = command.TableName;
+            var schema = command.Schema;
+            var operations = command.ColumnModifications;
+            var writeOperations = operations.Where(o => o.IsWrite).ToList();
+            var readOperations = operations.Where(o => o.IsRead).ToList();
+
+            AppendInsertCommand(commandStringBuilder, name, schema, writeOperations);
+
+            if(readOperations.Count > 0) {
+                var keyOperations = operations.Where(o => o.IsKey).ToList();
+
+                return AppendSelectAffectedAfterInsertCommand(commandStringBuilder, name, schema, readOperations, keyOperations);
+            }
+
+            return ResultSetMapping.NoResultSet;
         }
 
-        protected override void AppendRowsAffectedWhereCondition([NotNull] StringBuilder commandStringBuilder, int expectedRowsAffected) {
-            throw new System.NotImplementedException();
+        private ResultSetMapping AppendSelectAffectedAfterInsertCommand(
+            [NotNull] StringBuilder commandStringBuilder,
+            [NotNull] string name,
+            [AllowNull] string schema,
+            [NotNull] IReadOnlyList<ColumnModification> readOperations,
+            [NotNull] IReadOnlyList<ColumnModification> conditionOperations
+        ) {
+
+            AppendSelectCommandHeader(commandStringBuilder, readOperations);
+            AppendFromClause(commandStringBuilder, name, schema);
+            AppendWhereAffectedClause(commandStringBuilder, conditionOperations, true);
+            commandStringBuilder.AppendLine(SqlGenerationHelper.StatementTerminator)
+                .AppendLine();
+
+            return ResultSetMapping.LastInResultSet;
         }
+
+        protected override void AppendWhereAffectedClause(
+            [NotNull] StringBuilder commandStringBuilder,
+            [NotNull] IReadOnlyList<ColumnModification> operations
+        ) => AppendWhereAffectedClause(commandStringBuilder, operations, false);
+
+        private void AppendWhereAffectedClause(
+            [NotNull] StringBuilder commandStringBuilder,
+            [NotNull] IReadOnlyList<ColumnModification> operations,
+            bool isAfterInsert
+        ) {
+            commandStringBuilder.ThrowIfNull(nameof(commandStringBuilder));
+            operations.ThrowIfNull(nameof(operations));
+
+            commandStringBuilder
+                .AppendLine()
+                .Append("WHERE ");
+
+            //AppendRowsAffectedWhereCondition(commandStringBuilder, 1);
+
+            if(operations.Count > 0) {
+                commandStringBuilder
+                    //.Append(" AND ")
+                    .AppendJoin(
+                        operations, (sb, v) => {
+                            if(v.IsKey) {
+                                if(v.IsRead) {
+                                    AppendIdentityWhereCondition(sb, v, isAfterInsert);
+                                }
+                                else {
+                                    AppendWhereCondition(sb, v, v.UseOriginalValueParameter);
+                                }
+                            }
+                        }, " AND ");
+            }
+        }
+
+        protected override void AppendIdentityWhereCondition(
+            [NotNull] StringBuilder commandStringBuilder,
+            [NotNull] ColumnModification columnModification
+        ) => this.AppendIdentityWhereCondition(commandStringBuilder, columnModification, false);
+
+        private void AppendIdentityWhereCondition(
+            [NotNull] StringBuilder commandStringBuilder,
+            [NotNull] ColumnModification columnModification,
+            bool isAfterInsert
+        ) {
+            if(isAfterInsert) {
+                commandStringBuilder.Append("recno() = recno(1)");
+            }
+            //SqlGenerationHelper.DelimitIdentifier(commandStringBuilder, columnModification.ColumnName);
+
+            //commandStringBuilder
+            //    .Append(" = ")
+            //    .Append(IdentityCursorAlias)
+            //    .Append(".");
+
+            //SqlGenerationHelper.DelimitIdentifier(commandStringBuilder, columnModification.ColumnName);
+        }
+
+        // Tried implementing this method using _Tally but it turns out that _tally isn't reliable.  
+        protected override void AppendRowsAffectedWhereCondition([NotNull] StringBuilder commandStringBuilder, int expectedRowsAffected) { }
     }
 }

@@ -1,17 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Update;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using EntityFrameworkCore.Vfp.Diagnostics.Internal;
+﻿using EntityFrameworkCore.Vfp.Diagnostics.Internal;
 using EntityFrameworkCore.Vfp.Infrastructure.Internal;
 using EntityFrameworkCore.Vfp.Internal;
 using EntityFrameworkCore.Vfp.Metadata.Conventions;
@@ -20,11 +7,20 @@ using EntityFrameworkCore.Vfp.Migrations.Internal;
 using EntityFrameworkCore.Vfp.Query.Internal;
 using EntityFrameworkCore.Vfp.Storage.Internal;
 using EntityFrameworkCore.Vfp.Storage.Internal.Interfaces;
-using EntityFrameworkCore.Vfp.Update;
 using EntityFrameworkCore.Vfp.Update.Internal;
 using EntityFrameworkCore.Vfp.Update.Internal.Interfaces;
 using EntityFrameworkCore.Vfp.ValueGeneration;
 using EntityFrameworkCore.Vfp.ValueGeneration.Internal;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Update;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EntityFrameworkCore.Vfp.Extensions {
     public static class VfpServiceCollectionExtensions {

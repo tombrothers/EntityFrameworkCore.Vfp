@@ -9,22 +9,26 @@ namespace EntityFrameworkCore.Vfp.Storage.Internal {
         private readonly int _maxSpecificSize;
 
         public VfpStringTypeMapping(
+            VfpType vfpType,
+            int? size = null,
+            bool fixedLength = false
+        ) : this(vfpType.ToVfpTypeName(), size, fixedLength, vfpType) { }
+
+        public VfpStringTypeMapping(
             [AllowNull] string storeType = null,
             int? size = null,
             bool fixedLength = false,
-            VfpType? vfpType = null,
-            StoreTypePostfix? storeTypePostfix = null
-        ) : this(
-                new RelationalTypeMappingParameters(
-                    new CoreTypeMappingParameters(typeof(string)),
-                    storeType ?? GetStoreName(fixedLength, size),
-                    storeTypePostfix ?? StoreTypePostfix.Size,
-                    GetDbType(fixedLength, size),
-                    false,
-                    size,
-                    fixedLength
-                ),
-                vfpType
+            VfpType? vfpType = null
+        ) : this(new RelationalTypeMappingParameters(
+                new CoreTypeMappingParameters(typeof(string)),
+                storeType ?? GetStoreName(fixedLength, size),
+                StoreTypePostfix.Size,
+                GetDbType(fixedLength, size),
+                false,
+                size,
+                fixedLength
+            ),
+            vfpType
         ) {
         }
 

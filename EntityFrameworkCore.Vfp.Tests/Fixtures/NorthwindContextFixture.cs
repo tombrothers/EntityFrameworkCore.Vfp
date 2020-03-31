@@ -1,7 +1,6 @@
-﻿using System.IO;
+﻿using EntityFrameworkCore.Vfp.Tests.Data.Northwind;
+using System.IO;
 using System.IO.Compression;
-using System.Threading;
-using EntityFrameworkCore.Vfp.Tests.Data.Northwind;
 
 namespace EntityFrameworkCore.Vfp.Tests.Fixtures {
     public class NorthwindContextFixture : DbContextFixtureBase<NorthwindContext> {
@@ -12,34 +11,11 @@ namespace EntityFrameworkCore.Vfp.Tests.Fixtures {
         }
 
         public NorthwindContextFixture() {
-            EnsureZipFileExists();
+            EnsureZipFileExists(zipFullPath, Properties.Resources.NorthwindVfpZip);
 
             ZipFile.ExtractToDirectory(zipFullPath, this.DataDirectory);
         }
 
         protected override NorthwindContext CreateContext() => new NorthwindContext(Path.Combine(this.DataDirectory, "northwind.dbc"));
-
-        private static void EnsureZipFileExists() {
-            const int maxAttempts = 5;
-            var attempt = 0;
-
-            while(true) {
-                if(File.Exists(zipFullPath)) {
-                    return;
-                }
-
-                try {
-                    File.WriteAllBytes(zipFullPath, Properties.Resources.NorthwindVfpZip);
-                }
-                catch(IOException) {
-                    if(!File.Exists(zipFullPath) && attempt == maxAttempts) {
-                        throw;
-                    }
-
-                    Thread.Sleep(500);
-                    attempt++;
-                }
-            }
-        }
     }
 }

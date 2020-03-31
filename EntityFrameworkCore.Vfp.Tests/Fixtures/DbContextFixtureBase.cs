@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using VfpClient;
 using Xunit.Abstractions;
 using static System.String;
@@ -26,11 +27,12 @@ namespace EntityFrameworkCore.Vfp.Tests.Fixtures {
 
         public void Execute(ITestOutputHelper output, Action<TContext> action) {
             VfpClientTracing.Tracer.Switch.Level = SourceLevels.All;
-            VfpClientTracing.Tracer.Listeners.Clear();            
+            VfpClientTracing.Tracer.Listeners.Clear();
             VfpClientTracing.Tracer.Listeners.Add(new TestOutputTraceListener(output));
 
             using(var context = CreateContext()) {
                 var connection = (VfpConnection)context.Database.GetDbConnection();
+                output.WriteLine($"connection string: {connection.ConnectionString }");
 
                 connection.CommandExecuting = details => log(output, details);
                 connection.CommandFailed = details => log(output, details);
@@ -44,6 +46,29 @@ namespace EntityFrameworkCore.Vfp.Tests.Fixtures {
 
         protected abstract TContext CreateContext();
 
+        protected static void EnsureZipFileExists(string zipFullPath, byte[] content) {
+            const int maxAttempts = 5;
+            var attempt = 0;
+
+            while(true) {
+                if(File.Exists(zipFullPath)) {
+                    return;
+                }
+
+                try {
+                    File.WriteAllBytes(zipFullPath, content);
+                }
+                catch(IOException) {
+                    if(!File.Exists(zipFullPath) && attempt == maxAttempts) {
+                        throw;
+                    }
+
+                    Thread.Sleep(500);
+                    attempt++;
+                }
+            }
+        }
+
         protected virtual void Dispose(bool disposing) {
             if(!disposed) {
                 if(IsNullOrWhiteSpace(this.DataDirectory) || !Directory.Exists(this.DataDirectory)) {
@@ -51,7 +76,7 @@ namespace EntityFrameworkCore.Vfp.Tests.Fixtures {
                 }
 
                 try {
-                    Directory.Delete(this.DataDirectory, true);
+                    //Directory.Delete(this.DataDirectory, true);
                 }
                 catch(Exception ex) {
                     Console.WriteLine(ex.ToString());

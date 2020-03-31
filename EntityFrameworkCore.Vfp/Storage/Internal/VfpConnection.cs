@@ -8,6 +8,6 @@ namespace EntityFrameworkCore.Vfp.Storage.Internal {
         public VfpConnection([NotNull] RelationalConnectionDependencies dependencies) : base(dependencies) {
         }
 
-        protected override DbConnection CreateDbConnection() => new VfpClient.VfpConnection(ConnectionString);
+        protected override DbConnection CreateDbConnection() => new VfpOleDb.VfpConnection(ConnectionString);
     }
 }

@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using EntityFrameworkCore.Vfp.Tests.Data.Northwind.Models;
+﻿using EntityFrameworkCore.Vfp.Tests.Data.Northwind.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EntityFrameworkCore.Vfp.Tests.Data.Northwind {
     public class NorthwindContext : DbContext {
