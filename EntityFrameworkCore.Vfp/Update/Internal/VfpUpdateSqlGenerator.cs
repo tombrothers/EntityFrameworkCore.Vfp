@@ -1,5 +1,8 @@
 ﻿using EntityFrameworkCore.Vfp.Update.Internal.Interfaces;
 using EntityFrameworkCore.Vfp.VfpOleDb;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Update;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -46,7 +49,7 @@ namespace EntityFrameworkCore.Vfp.Update.Internal {
 
             AppendSelectCommandHeader(commandStringBuilder, readOperations);
             AppendFromClause(commandStringBuilder, name, schema);
-            AppendWhereAffectedClause(commandStringBuilder, conditionOperations, true);
+            AppendWhereAffectedClause(commandStringBuilder, conditionOperations);
             commandStringBuilder.AppendLine(SqlGenerationHelper.StatementTerminator)
                 .AppendLine();
 
@@ -56,12 +59,6 @@ namespace EntityFrameworkCore.Vfp.Update.Internal {
         protected override void AppendWhereAffectedClause(
             [NotNull] StringBuilder commandStringBuilder,
             [NotNull] IReadOnlyList<ColumnModification> operations
-        ) => AppendWhereAffectedClause(commandStringBuilder, operations, false);
-
-        private void AppendWhereAffectedClause(
-            [NotNull] StringBuilder commandStringBuilder,
-            [NotNull] IReadOnlyList<ColumnModification> operations,
-            bool isAfterInsert
         ) {
             commandStringBuilder.ThrowIfNull(nameof(commandStringBuilder));
             operations.ThrowIfNull(nameof(operations));
@@ -79,7 +76,7 @@ namespace EntityFrameworkCore.Vfp.Update.Internal {
                         operations, (sb, v) => {
                             if(v.IsKey) {
                                 if(v.IsRead) {
-                                    AppendIdentityWhereCondition(sb, v, isAfterInsert);
+                                    AppendIdentityWhereCondition(sb, v);
                                 }
                                 else {
                                     AppendWhereCondition(sb, v, v.UseOriginalValueParameter);
@@ -92,27 +89,26 @@ namespace EntityFrameworkCore.Vfp.Update.Internal {
         protected override void AppendIdentityWhereCondition(
             [NotNull] StringBuilder commandStringBuilder,
             [NotNull] ColumnModification columnModification
-        ) => this.AppendIdentityWhereCondition(commandStringBuilder, columnModification, false);
-
-        private void AppendIdentityWhereCondition(
-            [NotNull] StringBuilder commandStringBuilder,
-            [NotNull] ColumnModification columnModification,
-            bool isAfterInsert
         ) {
-            if(isAfterInsert) {
-                commandStringBuilder.Append("recno() = recno(1)");
-            }
-            //SqlGenerationHelper.DelimitIdentifier(commandStringBuilder, columnModification.ColumnName);
-
-            //commandStringBuilder
-            //    .Append(" = ")
-            //    .Append(IdentityCursorAlias)
-            //    .Append(".");
-
-            //SqlGenerationHelper.DelimitIdentifier(commandStringBuilder, columnModification.ColumnName);
+            commandStringBuilder
+                .Append(columnModification.ColumnName)
+                .Append("=")
+                .Append(VfpCommand.ExecuteScalarBeginDelimiter)
+                .Append("=")
+                .Append(GetTableName(columnModification.Entry.EntityType))
+                .Append(".")
+                .Append(columnModification.ColumnName)
+                .Append(VfpCommand.ExecuteScalarEndDelimiter)
+                .Append(" ");
         }
 
         // Tried implementing this method using _Tally but it turns out that _tally isn't reliable.  
         protected override void AppendRowsAffectedWhereCondition([NotNull] StringBuilder commandStringBuilder, int expectedRowsAffected) { }
+
+        private static string GetTableName(IEntityType entityType) {
+            var tableNameAnnotation = entityType.GetAnnotation(RelationalAnnotationNames.TableName);
+
+            return tableNameAnnotation.Value.ToString();
+        }
     }
 }
