@@ -22,11 +22,10 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
                 context.Entry(item).State = EntityState.Modified;
 
                 context.SaveChanges();
-
             });
 
             Execute(context => {
-                var item2 = context.AllTypes.ToList().First();
+                var item2 = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == item.Id);
 
                 AssertEqual(item, item2);
             });
@@ -34,10 +33,10 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
 
         [Fact]
         public void Inserted_And_Retrieved_EmptyValues_With_SetNullOn() {
-            Insert_WithEmptyValues(true);
+            var id = Insert_WithEmptyValues(true).Id;
 
             Execute(context => {
-                var item = context.AllTypes.ToList().First();
+                var item = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == id);
 
                 Assert.Null(item.BinaryChar);
                 Assert.Null(item.BinaryMemo);
@@ -59,10 +58,10 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
 
         [Fact(Skip = "set null off isn't working")]
         public void Inserted_And_Retrieved_EmptyValues_With_SetNullOff() {
-            Insert_WithEmptyValues(false);
+            var id = Insert_WithEmptyValues(false).Id;
 
             Execute(context => {
-                var item = context.AllTypes.ToList().First();
+                var item = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == id);
 
                 Assert.Equal(string.Empty, item.BinaryChar);
                 Assert.Equal(string.Empty, item.BinaryMemo);
@@ -96,7 +95,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
             var item = Insert_WithValues();
 
             Execute(context => {
-                var item2 = context.AllTypes.ToList().First();
+                var item2 = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == item.Id);
 
                 AssertEqual(item, item2);
             });

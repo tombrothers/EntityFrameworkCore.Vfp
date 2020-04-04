@@ -11,5 +11,18 @@ namespace EntityFrameworkCore.Vfp.Query.Internal {
         protected override Expression VisitSelect(SelectExpression selectExpression) {
             return base.VisitSelect(selectExpression);
         }
+
+        protected override void GenerateTop(SelectExpression selectExpression) {
+            if(selectExpression.Limit != null && selectExpression.Offset == null) {
+                Sql.Append("TOP ");
+
+                Visit(selectExpression.Limit);
+
+                Sql.Append(" ");
+            }
+        }
+
+        protected override void GenerateLimitOffset([NotNull] SelectExpression selectExpression) {
+        }
     }
 }
