@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace EntityFrameworkCore.Vfp.Query.Internal {
     public class VfpSqlTranslatingExpressionVisitorFactory : IRelationalSqlTranslatingExpressionVisitorFactory {

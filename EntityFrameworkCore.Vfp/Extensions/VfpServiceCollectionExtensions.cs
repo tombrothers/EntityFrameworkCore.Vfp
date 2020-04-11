@@ -4,6 +4,7 @@ using EntityFrameworkCore.Vfp.Internal;
 using EntityFrameworkCore.Vfp.Metadata.Conventions;
 using EntityFrameworkCore.Vfp.Migrations;
 using EntityFrameworkCore.Vfp.Migrations.Internal;
+using EntityFrameworkCore.Vfp.Query;
 using EntityFrameworkCore.Vfp.Query.Internal;
 using EntityFrameworkCore.Vfp.Storage.Internal;
 using EntityFrameworkCore.Vfp.Storage.Internal.Interfaces;
@@ -45,6 +46,7 @@ namespace EntityFrameworkCore.Vfp.Extensions {
                 .TryAdd<IHistoryRepository, VfpHistoryRepository>()
                 .TryAdd<IExecutionStrategyFactory, VfpExecutionStrategyFactory>()
                 .TryAdd<IRelationalQueryStringFactory, VfpQueryStringFactory>()
+                .TryAdd<IQueryTranslationPostprocessorFactory, VfpQueryTranslationPostprocessorFactory>()
                 // Query
                 .TryAdd<IMethodCallTranslatorProvider, VfpMethodCallTranslatorProvider>()
                 .TryAdd<IMemberTranslatorProvider, VfpMemberTranslatorProvider>()

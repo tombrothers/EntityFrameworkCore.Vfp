@@ -4,11 +4,7 @@ using System.IO.Compression;
 
 namespace EntityFrameworkCore.Vfp.Tests.Fixtures {
     public class AllTypesContextFixture : DbContextFixtureBase<AllTypesContext> {
-        private static readonly string zipFullPath;
-
-        static AllTypesContextFixture() {
-            zipFullPath = Path.Combine(RootDirectory, "AllTypes.zip");
-        }
+        private static readonly string zipFullPath = Path.Combine(RootDirectory, "AllTypes.zip");
 
         public AllTypesContextFixture() {
             EnsureZipFileExists(zipFullPath, Properties.Resources.AllTypesZip);

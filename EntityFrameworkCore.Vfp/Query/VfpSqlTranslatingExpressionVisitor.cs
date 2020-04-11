@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query;
 using System.Diagnostics.CodeAnalysis;
 
-namespace EntityFrameworkCore.Vfp.Query.Internal {
+namespace EntityFrameworkCore.Vfp.Query {
     public class VfpSqlTranslatingExpressionVisitor : RelationalSqlTranslatingExpressionVisitor {
         public VfpSqlTranslatingExpressionVisitor(
             [NotNull] RelationalSqlTranslatingExpressionVisitorDependencies dependencies,

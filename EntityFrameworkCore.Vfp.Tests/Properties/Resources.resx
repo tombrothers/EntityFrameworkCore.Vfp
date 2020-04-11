@@ -121,6 +121,9 @@
   <data name="AllTypesZip" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AllTypes.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="AutoGenIdZip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\autogenid.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="NorthwindVfpZip" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\northwindvfp.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -25,7 +25,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
             });
 
             Execute(context => {
-                var item2 = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == item.Id);
+                var item2 = context.AllTypes.First(x => x.Id == item.Id);
 
                 AssertEqual(item, item2);
             });
@@ -36,7 +36,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
             var id = Insert_WithEmptyValues(true).Id;
 
             Execute(context => {
-                var item = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == id);
+                var item = context.AllTypes.First(x => x.Id == id);
 
                 Assert.Null(item.BinaryChar);
                 Assert.Null(item.BinaryMemo);
@@ -61,7 +61,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
             var id = Insert_WithEmptyValues(false).Id;
 
             Execute(context => {
-                var item = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == id);
+                var item = context.AllTypes.First(x => x.Id == id);
 
                 Assert.Equal(string.Empty, item.BinaryChar);
                 Assert.Equal(string.Empty, item.BinaryMemo);
@@ -95,7 +95,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
             var item = Insert_WithValues();
 
             Execute(context => {
-                var item2 = context.AllTypes.OrderBy(x => x.Id).First(x => x.Id == item.Id);
+                var item2 = context.AllTypes.First(x => x.Id == item.Id);
 
                 AssertEqual(item, item2);
             });

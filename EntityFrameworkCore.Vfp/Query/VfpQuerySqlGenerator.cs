@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
-namespace EntityFrameworkCore.Vfp.Query.Internal {
+namespace EntityFrameworkCore.Vfp.Query {
     public class VfpQuerySqlGenerator : QuerySqlGenerator {
         public VfpQuerySqlGenerator([NotNull] QuerySqlGeneratorDependencies dependencies) : base(dependencies) {
         }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Query;
 using System.Diagnostics.CodeAnalysis;
 
-namespace EntityFrameworkCore.Vfp.Query.Internal {
+namespace EntityFrameworkCore.Vfp.Query {
     public class VfpParameterBasedQueryTranslationPostprocessor : RelationalParameterBasedQueryTranslationPostprocessor {
         public VfpParameterBasedQueryTranslationPostprocessor(
             [NotNull] RelationalParameterBasedQueryTranslationPostprocessorDependencies dependencies,
