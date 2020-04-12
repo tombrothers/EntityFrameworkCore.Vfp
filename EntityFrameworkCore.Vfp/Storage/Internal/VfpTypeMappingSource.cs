@@ -44,8 +44,8 @@ namespace EntityFrameworkCore.Vfp.Storage.Internal {
                 return _storeTypeMappings[mappingInfo.StoreTypeName];
             }
 
-            if(mappingInfo.ClrType != null) {
-                return _clrTypeMappings[mappingInfo.ClrType];
+            if(mappingInfo.ClrType != null && _clrTypeMappings.TryGetValue(mappingInfo.ClrType, out var typeMapping)) {
+                return typeMapping;
             }
 
             return null;

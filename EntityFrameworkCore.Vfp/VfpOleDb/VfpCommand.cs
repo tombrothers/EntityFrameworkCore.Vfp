@@ -7,6 +7,7 @@ using System.Linq;
 using static System.String;
 
 namespace EntityFrameworkCore.Vfp.VfpOleDb {
+    #pragma warning disable CA2100 // Review SQL queries for security vulnerabilities
     public class VfpCommand : VfpClient.VfpCommand, ICloneable {
         internal const string SplitCommandsToken = "{{{|VFP:EF:NEWCOMMAND|}}}";
         internal const string SingleRowTempTableName = "_VFP_EF_SINGLEROWTEMPTABLE";
@@ -17,6 +18,7 @@ namespace EntityFrameworkCore.Vfp.VfpOleDb {
         protected new internal OleDbCommand OleDbCommand { get { return base.OleDbCommand; } }
 
         public VfpCommand(string commandText = null, VfpClient.VfpConnection connection = null, VfpClient.VfpTransaction transaction = null) {
+
             CommandText = commandText;
 
             if(connection != null) {
