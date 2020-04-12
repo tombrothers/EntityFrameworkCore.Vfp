@@ -21,7 +21,7 @@ namespace EntityFrameworkCore.Vfp.Storage.Internal {
         private readonly VfpTypeMapping _general = new VfpTypeMapping(VfpType.General, typeof(byte[]));
         private readonly VfpGuidTypeMapping _guid = new VfpGuidTypeMapping();
         private readonly VfpIntegerTypeMapping _interger = new VfpIntegerTypeMapping();
-        private readonly VfpTypeMapping _logical = new VfpTypeMapping(VfpType.General, typeof(bool));
+        private readonly VfpTypeMapping _logical = new VfpTypeMapping(VfpType.Logical, typeof(bool));
         private readonly VfpStringTypeMapping _memo = new VfpStringTypeMapping(VfpType.Memo);
         private readonly VfpNumericTypeMapping _numeric = new VfpNumericTypeMapping(VfpType.Numeric);
         private readonly VfpTypeMapping _varBinary = new VfpTypeMapping(VfpType.Varbinary, typeof(byte[]));
