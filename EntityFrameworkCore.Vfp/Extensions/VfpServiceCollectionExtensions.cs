@@ -47,6 +47,7 @@ namespace EntityFrameworkCore.Vfp.Extensions {
                 .TryAdd<IExecutionStrategyFactory, VfpExecutionStrategyFactory>()
                 .TryAdd<IRelationalQueryStringFactory, VfpQueryStringFactory>()
                 .TryAdd<IQueryTranslationPostprocessorFactory, VfpQueryTranslationPostprocessorFactory>()
+                .TryAdd<ISqlExpressionFactory, VfpSqlExpressionFactory>()
                 // Query
                 .TryAdd<IMethodCallTranslatorProvider, VfpMethodCallTranslatorProvider>()
                 .TryAdd<IMemberTranslatorProvider, VfpMemberTranslatorProvider>()

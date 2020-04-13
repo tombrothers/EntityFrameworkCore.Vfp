@@ -18,6 +18,7 @@ namespace EntityFrameworkCore.Vfp.Query {
             query = base.Process(query);
             query = new ExistsRewritter().Visit(query);
             query = new MissingOrderByRewritter().Visit(query);
+            //query = new SingleRowTableRewritter().Visit(query);
 
 #if DEBUG
             var expressionString = query.Print();
