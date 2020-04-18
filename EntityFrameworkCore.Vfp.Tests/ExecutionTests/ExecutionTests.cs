@@ -115,14 +115,6 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
         });
 
         [Fact]
-        public void TestSelectConstantNullString() => Execute(context => {
-            var list = context.Customers.Select(c => (string)null).ToList();
-
-            Assert.Equal(91, list.Count());
-            Assert.True(list.All(x => x == null));
-        });
-
-        [Fact]
         public void TestSelectLocal() => Execute(context => {
             var x = 10;
             var list = context.Customers.Select(c => x).ToList();
@@ -179,21 +171,6 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
 
             Assert.Single(list);
             Assert.Null(list[0].o);
-        });
-
-        [Fact]
-        public void TestMultipleJoinsWithJoinConditionsInWhere() => Execute(context => {
-            // this should reduce to inner joins
-            var list = (
-                from c in context.Customers
-                from o in context.Orders
-                from d in context.OrderDetails
-                where o.Customer.CustomerId == c.CustomerId && o.OrderId == d.OrderId
-                where c.CustomerId == "ALFKI"
-                select d
-                ).ToList();
-
-            Assert.Equal(12, list.Count());
         });
 
         [Fact]
@@ -616,13 +593,6 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
             var list = context.Customers.Where(c => ids.Contains(c.CustomerId)).ToList();
 
             Assert.Equal(2, list.Count());
-        });
-
-        [Fact]
-        public void TestContainsTopLevel() => Execute(context => {
-            var contains = context.Customers.Select(c => c.CustomerId).Contains("ALFKI");
-
-            Assert.True(contains);
         });
 
         [Fact]
@@ -1191,7 +1161,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
         [Fact]
         public void TestEqualLiteralNull() => Execute(context => {
             var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => x == null);
-            var queryText = query.ToString();
+            var queryText = query.ToQueryString();
 
             Assert.Contains("IS NULL", queryText);
             Assert.Equal(1, query.Count());
@@ -1200,7 +1170,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
         [Fact]
         public void TestEqualLiteralNullReversed() => Execute(context => {
             var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => null == x);
-            var queryText = query.ToString();
+            var queryText = query.ToQueryString();
 
             Assert.Contains("IS NULL", queryText);
             Assert.Equal(1, query.Count());
@@ -1209,7 +1179,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
         [Fact]
         public void TestNotEqualLiteralNull() => Execute(context => {
             var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => x != null);
-            var queryText = query.ToString();
+            var queryText = query.ToQueryString();
 
             Assert.Contains("IS NOT NULL", queryText);
             Assert.Equal(90, query.Count());
@@ -1218,7 +1188,7 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
         [Fact]
         public void TestNotEqualLiteralNullReversed() => Execute(context => {
             var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => null != x);
-            var queryText = query.ToString();
+            var queryText = query.ToQueryString();
 
             Assert.Contains("IS NOT NULL", queryText);
             Assert.Equal(90, query.Count());

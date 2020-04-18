@@ -18,6 +18,14 @@ namespace EntityFrameworkCore.Vfp.Query {
         public VfpQuerySqlGenerator([NotNull] QuerySqlGeneratorDependencies dependencies) : base(dependencies) {
         }
 
+        protected override Expression VisitCrossJoin(CrossJoinExpression crossJoinExpression) {
+            Sql.Append(", ");
+
+            Visit(crossJoinExpression.Table);
+
+            return crossJoinExpression;
+        }
+
         protected override Expression VisitSqlBinary(SqlBinaryExpression sqlBinaryExpression) {
             if(_binaryFunctions.TryGetValue(sqlBinaryExpression.OperatorType, out var function)) {
                 WriteSqlBinaryFunction(function, sqlBinaryExpression);
