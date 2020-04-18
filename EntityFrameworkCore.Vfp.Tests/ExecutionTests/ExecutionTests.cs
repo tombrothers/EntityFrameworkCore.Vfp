@@ -635,6 +635,20 @@ namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
         });
 
         [Fact]
+        public void TestSkipTakeWhere() => Execute(context => {
+            var list = context.Customers
+                .Where(x => x.CustomerId.StartsWith("A"))
+                .OrderBy(x => x.CustomerId)
+                .Select(c => c.CustomerId)
+                .Skip(1)
+                .Take(1)
+                .ToList();
+
+            Assert.Single(list);
+            Assert.Equal("ANATR", list[0]);
+        });
+
+        [Fact]
         public void TestDistinctSkipTake() => Execute(context => {
             var list = context.Customers.Select(c => c.Address.City).Distinct().OrderBy(c => c).Skip(5).Take(10).ToList();
 

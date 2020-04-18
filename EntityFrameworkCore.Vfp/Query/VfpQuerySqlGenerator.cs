@@ -143,7 +143,6 @@ namespace EntityFrameworkCore.Vfp.Query {
         }
 
         protected override void GenerateLimitOffset([NotNull] SelectExpression selectExpression) {
-            base.GenerateLimitOffset(selectExpression);
         }
     }
 }
