@@ -10,9 +10,10 @@ namespace EntityFrameworkCore.Vfp.Query.Internal {
             AddTranslators(
                 new IMethodCallTranslator[]
                 {
+                    new VfpFunctionsMethodTranslator(dependencies),
                     new VfpStringMethodTranslator(sqlExpressionFactory),
                     new VfpMathMethodTranslator(sqlExpressionFactory),
-                    new VfpDecimalMethodTranslator(sqlExpressionFactory)
+                    new VfpDecimalMethodTranslator(sqlExpressionFactory)                    
                 }); ;
         }
     }

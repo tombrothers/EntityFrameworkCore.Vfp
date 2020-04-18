@@ -66,9 +66,6 @@ namespace EntityFrameworkCore.Vfp.Storage.Internal {
                 { typeof(decimal), _numeric },
                 { typeof(int), _interger },
                 { typeof(string), _memo },
-
-
-
             };
 
         private Dictionary<string, RelationalTypeMapping> CreateStoreTypeMappings() =>
