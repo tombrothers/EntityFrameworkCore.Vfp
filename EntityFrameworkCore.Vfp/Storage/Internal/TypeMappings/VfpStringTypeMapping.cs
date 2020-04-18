@@ -3,7 +3,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using VfpClient;
 
-namespace EntityFrameworkCore.Vfp.Storage.Internal {
+namespace EntityFrameworkCore.Vfp.Storage.Internal.TypeMappings {
     public class VfpStringTypeMapping : RelationalTypeMapping {
         private readonly VfpType? _vfpType;
         private readonly int _maxSpecificSize;

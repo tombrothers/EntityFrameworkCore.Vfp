@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using VfpClient;
 
-namespace EntityFrameworkCore.Vfp.Storage.Internal {
+namespace EntityFrameworkCore.Vfp.Storage.Internal.TypeMappings {
     public class VfpNumericTypeMapping : RelationalTypeMapping {
         private readonly VfpType _vfpType;
 

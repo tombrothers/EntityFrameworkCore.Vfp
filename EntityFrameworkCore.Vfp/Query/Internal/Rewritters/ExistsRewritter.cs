@@ -1,6 +1,6 @@
 ﻿using EntityFrameworkCore.Vfp.Query.SqlExpressions;
 using EntityFrameworkCore.Vfp.Storage;
-using EntityFrameworkCore.Vfp.Storage.Internal;
+using EntityFrameworkCore.Vfp.Storage.Internal.TypeMappings;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Collections.Generic;
@@ -26,11 +26,11 @@ namespace EntityFrameworkCore.Vfp.Query.Internal.Rewritters {
                         new SqlConstantExpression(Expression.Constant("0"), new VfpIntegerTypeMapping()),
                         new ScalarSubqueryExpression(subquerySelectExpression),
                         typeof(bool),
-                        new VfpTypeMapping(VfpType.Logical, typeof(bool))
+                        new VfpLogicalTypeMapping()
                     );
 
                     if(existsExpression.IsNegated) {
-                        projection = new SqlUnaryExpression(ExpressionType.Not, projection, typeof(bool), new VfpTypeMapping(VfpType.Logical, typeof(bool)));
+                        projection = new SqlUnaryExpression(ExpressionType.Not, projection, typeof(bool), new VfpLogicalTypeMapping());
                     }
 
                     queryExpression = selectExpression.Update(

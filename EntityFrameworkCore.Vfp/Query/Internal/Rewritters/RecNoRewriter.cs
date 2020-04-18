@@ -1,5 +1,5 @@
 ﻿using EntityFrameworkCore.Vfp.Storage;
-using EntityFrameworkCore.Vfp.Storage.Internal;
+using EntityFrameworkCore.Vfp.Storage.Internal.TypeMappings;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace EntityFrameworkCore.Vfp.Query.Internal.Rewritters {
                     new SqlConstantExpression(Expression.Constant("recno()"), new VfpIntegerTypeMapping()),
                     selectExpression.Offset,
                     typeof(bool),
-                    new VfpTypeMapping(VfpType.Logical, typeof(bool))
+                    new VfpLogicalTypeMapping()
                 );
 
                 if(selectExpression.Predicate != null) {
@@ -28,7 +28,7 @@ namespace EntityFrameworkCore.Vfp.Query.Internal.Rewritters {
                         selectExpression.Predicate,
                         predicate,
                         typeof(bool),
-                        new VfpTypeMapping(VfpType.Logical, typeof(bool))
+                        new VfpLogicalTypeMapping()
                     );
                 }
 
