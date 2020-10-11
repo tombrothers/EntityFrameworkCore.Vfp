@@ -1159,24 +1159,6 @@ namespace EntityFrameworkCore.Vfp.Tests.Tests {
         });
 
         [Fact]
-        public void TestEqualLiteralNull() => Execute(context => {
-            var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => x == null);
-            var queryText = query.ToQueryString();
-
-            Assert.Contains("IS NULL", queryText);
-            Assert.Equal(1, query.Count());
-        });
-
-        [Fact]
-        public void TestEqualLiteralNullReversed() => Execute(context => {
-            var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => null == x);
-            var queryText = query.ToQueryString();
-
-            Assert.Contains("IS NULL", queryText);
-            Assert.Equal(1, query.Count());
-        });
-
-        [Fact]
         public void TestNotEqualLiteralNull() => Execute(context => {
             var query = context.Customers.Select(c => c.CustomerId == "ALFKI" ? null : c.CustomerId).Where(x => x != null);
             var queryText = query.ToQueryString();

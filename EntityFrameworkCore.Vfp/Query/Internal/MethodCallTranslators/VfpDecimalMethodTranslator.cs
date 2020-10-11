@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
@@ -26,9 +28,10 @@ namespace EntityFrameworkCore.Vfp.Query.Internal.MethodCallTranslators {
             _sqlExpressionFactory = sqlExpressionFactory;
         }
 
-        public virtual SqlExpression Translate(SqlExpression instance, MethodInfo method, IReadOnlyList<SqlExpression> arguments) {
+        public virtual SqlExpression Translate(SqlExpression instance, MethodInfo method, IReadOnlyList<SqlExpression> arguments, IDiagnosticsLogger<DbLoggerCategory.Query> logger) {
             method.ThrowIfNull(nameof(method));
             arguments.ThrowIfNull(nameof(arguments));
+            logger.ThrowIfNull(nameof(logger));
 
             if(_supportedMethodTranslations.TryGetValue(method, out var sqlFunctionName)) {
                 var typeMapping = arguments.Count == 1

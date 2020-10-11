@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -12,9 +14,10 @@ namespace EntityFrameworkCore.Vfp.Query.Internal.MemberTranslators {
             _sqlExpressionFactory = sqlExpressionFactory;
         }
 
-        public virtual SqlExpression Translate(SqlExpression instance, MemberInfo member, Type returnType) {
+        public virtual SqlExpression Translate(SqlExpression instance, MemberInfo member, Type returnType, IDiagnosticsLogger<DbLoggerCategory.Query> logger) {
             member.ThrowIfNull(nameof(member));
             returnType.ThrowIfNull(nameof(returnType));
+            logger.ThrowIfNull(nameof(logger));
 
             if(member.Name == nameof(string.Length)
                 && instance?.Type == typeof(string)) {

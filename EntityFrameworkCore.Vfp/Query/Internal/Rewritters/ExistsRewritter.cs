@@ -1,12 +1,10 @@
 ﻿using EntityFrameworkCore.Vfp.Query.SqlExpressions;
-using EntityFrameworkCore.Vfp.Storage;
 using EntityFrameworkCore.Vfp.Storage.Internal.TypeMappings;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using VfpClient;
 
 namespace EntityFrameworkCore.Vfp.Query.Internal.Rewritters {
     public class ExistsRewritter : ExpressionVisitor {
@@ -34,16 +32,14 @@ namespace EntityFrameworkCore.Vfp.Query.Internal.Rewritters {
                     }
 
                     queryExpression = selectExpression.Update(
-                        new List<ProjectionExpression> { new ProjectionExpression(projection, string.Empty) },
+                        new List<ProjectionExpression> { selectExpression.Projection.FirstOrDefault().Update(projection) },
                         new List<TableExpressionBase> { new SingleRowTableExpression() },
                         selectExpression.Predicate,
                         selectExpression.GroupBy.ToList(),
                         selectExpression.Having,
                         selectExpression.Orderings.ToList(),
                         selectExpression.Limit,
-                        selectExpression.Offset,
-                        selectExpression.IsDistinct,
-                        selectExpression.Alias
+                        selectExpression.Offset
                     );
                 }
 

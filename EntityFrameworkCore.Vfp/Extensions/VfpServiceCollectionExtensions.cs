@@ -53,7 +53,7 @@ namespace EntityFrameworkCore.Vfp.Extensions {
                 .TryAdd<IMemberTranslatorProvider, VfpMemberTranslatorProvider>()
                 .TryAdd<IQuerySqlGeneratorFactory, VfpQuerySqlGeneratorFactory>()
                 .TryAdd<IRelationalSqlTranslatingExpressionVisitorFactory, VfpSqlTranslatingExpressionVisitorFactory>()
-                .TryAdd<IRelationalParameterBasedQueryTranslationPostprocessorFactory, VfpParameterBasedQueryTranslationPostprocessorFactory>()
+                .TryAdd<IRelationalParameterBasedSqlProcessorFactory, VfpParameterBasedSqlProcessorFactory>()
                 .TryAddProviderSpecificServices(x => x
                     .TryAddSingleton<IVfpValueGeneratorCache, VfpValueGeneratorCache>()
                     .TryAddSingleton<IVfpUpdateSqlGenerator, VfpUpdateSqlGenerator>()

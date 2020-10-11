@@ -10,7 +10,7 @@ namespace EntityFrameworkCore.Vfp.Query.SqlExpressions {
             Name = VfpCommand.SingleRowTempTableRequiredToken;
         }
 
-        public override void Print(ExpressionPrinter expressionPrinter) {
+        protected override void Print(ExpressionPrinter expressionPrinter) {
             expressionPrinter.ThrowIfNull(nameof(expressionPrinter));
 
             expressionPrinter.Append(Name).Append(" AS ").Append(Alias);

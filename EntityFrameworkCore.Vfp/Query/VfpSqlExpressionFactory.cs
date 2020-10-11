@@ -31,13 +31,15 @@ namespace EntityFrameworkCore.Vfp.Query {
                 ApplyTypeMapping(right, inferredTypeMapping)
             };
 
-            return SqlFunctionExpression.Create(
+            return new SqlFunctionExpression(
+                null,
                 "NVL",
                 typeMappedArguments,
                 true,
                 new[] { false, false },
                 resultType,
-                inferredTypeMapping);
+                inferredTypeMapping
+            );
         }
     }
 }
