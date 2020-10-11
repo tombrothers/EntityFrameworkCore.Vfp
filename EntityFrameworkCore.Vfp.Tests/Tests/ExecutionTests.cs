@@ -6,7 +6,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     // Derived from https://github.com/tombrothers/VfpEntityFrameworkProvider2/blob/master/Source/VfpEntityFrameworkProvider.Tests/ExecutionTests.cs
     public class ExecutionTests : NorthwindExecutionTestBase {
 

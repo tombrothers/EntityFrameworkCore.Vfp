@@ -8,7 +8,7 @@ using VfpClient;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public class AllTypesTests : DbContextExecutionTestBase<AllTypesContextFixture, AllTypesContext> {
         public AllTypesTests(AllTypesContextFixture fixture, ITestOutputHelper output) : base(fixture, output) {
         }

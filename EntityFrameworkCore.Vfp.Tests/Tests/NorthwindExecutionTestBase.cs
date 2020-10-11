@@ -2,7 +2,7 @@
 using EntityFrameworkCore.Vfp.Tests.Fixtures;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public abstract class NorthwindExecutionTestBase : DbContextExecutionTestBase<NorthwindContextFixture, NorthwindContext> {
 
         protected NorthwindExecutionTestBase(NorthwindContextFixture fixture, ITestOutputHelper output) : base(fixture, output) {

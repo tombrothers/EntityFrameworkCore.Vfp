@@ -3,7 +3,7 @@ using EntityFrameworkCore.Vfp.Tests.Fixtures;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public class QueryTests : NorthwindExecutionTestBase {
         private const string CustomerId = "ALFKI";
 

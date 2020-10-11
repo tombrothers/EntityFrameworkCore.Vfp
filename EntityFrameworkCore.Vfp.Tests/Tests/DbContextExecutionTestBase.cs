@@ -4,7 +4,7 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public abstract class DbContextExecutionTestBase<TFixture, TDbContext> : IClassFixture<TFixture>
         where TFixture : DbContextFixtureBase<TDbContext>
         where TDbContext : DbContext {

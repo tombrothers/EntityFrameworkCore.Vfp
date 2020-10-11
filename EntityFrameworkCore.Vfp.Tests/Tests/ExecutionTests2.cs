@@ -5,7 +5,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public class ExecutionTests2 : NorthwindExecutionTestBase {
 
         public ExecutionTests2(NorthwindContextFixture northwindContextFixture, ITestOutputHelper output) : base(northwindContextFixture, output) {

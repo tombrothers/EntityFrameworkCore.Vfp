@@ -6,7 +6,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public class VfpFunctionsTests : NorthwindExecutionTestBase {
         public VfpFunctionsTests(NorthwindContextFixture northwindContextFixture, ITestOutputHelper output) : base(northwindContextFixture, output) {
         }

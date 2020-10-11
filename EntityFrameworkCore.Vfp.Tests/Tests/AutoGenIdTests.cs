@@ -4,7 +4,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace EntityFrameworkCore.Vfp.Tests.ExecutionTests {
+namespace EntityFrameworkCore.Vfp.Tests.Tests {
     public class AutoGenIdTests : DbContextExecutionTestBase<AutoGenContextFixture, AutoGenContext> {
         public AutoGenIdTests(AutoGenContextFixture fixture, ITestOutputHelper output) : base(fixture, output) {
         }
